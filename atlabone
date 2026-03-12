@@ -1,0 +1,224 @@
+package main
+import ("fmt"
+"strings")
+
+func main() {
+    
+    // sentence := "it  was   the    best of times"
+    // fmt.Println(strings.Split(sentence, " "))
+    // fmt.Println(strings.Fields(sentence))
+
+    // sentence := "it  was   the    best of times"
+    // words := strings.Fields(sentence)
+    // result := strings.Join(words, " ")
+    // fmt.Println(result)
+    
+
+    //THE DIFFERENT STRINGS TYPE
+    
+    // word := "hello"
+
+    // fmt.Println(strings.ToUpper(word))
+    // fmt.Println(strings.ToLower(word))
+    // fmt.Println(strings.Title(word))
+    // fmt.Println(strings.TrimSpace("  hello  "))
+    // fmt.Println(strings.Trim("...hello...", "."))
+    // fmt.Println(strings.HasPrefix("(up)", "("))
+    // fmt.Println(strings.HasSuffix("(up)", ")"))
+    // fmt.Println(strings.Contains("(up, 3)", ","))
+    // fmt.Println(strings.Index("hello", "ll"))
+    // fmt.Println(strings.Index("hello", "xyz"))
+    
+    words := strings.Fields("it was the best (up, 2) of times")
+    // words := strings.Fields("it was the best (up) of times")
+    newList := []string{}
+    
+    // for i, w := range words {
+    //     if (strings.HasPrefix(w, "(")) && (strings.HasSuffix(words[i+1], ")")) {
+    //         // next
+    //         one := w + string(words[i+1])
+    //         newList = append(newList, one)
+    //         // continue
+    //     } else if strings.HasSuffix(w, ")") {
+    //         continue
+    //     } else { 
+    //         newList = append(newList, w)
+    //     }
+    //     // fmt.Println(i, w)
+    // }
+    
+    // for i, w := range words {
+    //     if (strings.HasPrefix(w, "(")) && (i+1 <= len(words)) {
+            
+    //         if (strings.HasPrefix(w, "(")) && (strings.HasSuffix(w, ")")) {
+    //             newList = append(newList)
+    //         } else {
+    //             one := w + string(words[i+1])
+    //             newList = append(newList, one)   
+    //         }
+    //         // continue
+    //     } else if strings.HasSuffix(w, ")") {
+    //         continue
+    //     } else { 
+    //         newList = append(newList, w)
+    //     }
+    // }
+     words := strings.Fields("it was the best (up, 2) of times")
+    // words := strings.Fields("it was the best (up) of times")
+    
+    for i, w := range words {
+        if (strings.HasPrefix(w, "(")) && (i+1 <= len(words)) { //first condition
+            
+            if !(strings.HasSuffix(w, ",")) {
+                newList = append(newList, w)
+            }else 
+            // !(strings.HasSuffix(w, ")")) || (strings.HasSuffix(words[i+1], ")")) 
+            {
+                newList = append(newList, string(words[i+1]))
+            }
+        } else {
+            newList = append(newList, w) //add new word to the newList
+        }
+    }
+    
+    fmt.Println(newList)
+  
+    
+}
+
+-------------------------------------------------------------
+
+
+package main
+import ("fmt"
+        "strings")
+
+func main() {
+    words := strings.Fields("it was the best (up, 2) of times")
+    newList := []string{}
+    
+    for i, w := range words {
+        fmt.Println(i, w)
+    }
+    
+    fmt.Println("-------------------")
+
+    // SKIPS ALL ONES WITH BRACKET
+    
+    // for _, w := range words {
+    //     // fmt.Println(i, w)
+    //     if (strings.HasPrefix(w, "(")) || (strings.HasSuffix(w, ")")){
+    //         // newList = append(newList, w)
+    //         continue
+    //     } else {
+    //          newList = append(newList, w)
+    //     }
+    // }
+    
+    // fmt.Print(newList)
+    
+    
+    for _, w := range words {
+        
+    }
+    
+    fmt.Print(newList)
+}
+
+
+
+----------------------------------------------------------------------
+
+package main
+
+import "fmt"
+import "strconv"
+import "strings"
+
+func main() {
+    // // converting hex "1E" to decimal
+    // n, err := strconv.ParseInt("1E", 16, 64)
+    // fmt.Println(n, err)
+    
+    // // converting binary "10" to decimal
+    // n, err = strconv.ParseInt("10", 2, 64)
+    // fmt.Println(n, err)
+    
+    // // parseInt("10", 2, 64) --- > this is for  (number, base, )
+    
+    words := strings.Fields("1E (hex) files were added")
+    newList := []string{} //new array to add new items
+    
+    for i, ch := range words {
+    //     if i+1 < len(words) {
+    //         next := string(words[i + 1])
+    //     }
+        
+        if  (i+1 < len(words)) && (words[i+1] == "(hex)") { //checks the lenght and the next word. take note that the order of comparison matters, i+1 len(word) will be checked before words[i+1]
+        
+            // prev := string(words[i-1])
+            one, err := strconv.ParseInt(ch, 16, 64) //returns int64 //a function that converts 
+            
+            if err != nil {
+                fmt.Print("error")
+            }
+            
+            one2 := strconv.Itoa(int(one)) //convert to a string/ascii from ParseInt (int64)
+            newList = append(newList, one2)
+            
+            continue
+            
+        } else if (ch == "(hex)") {
+            continue
+        } else {
+            newList = append(newList, ch)
+        }
+    }
+    
+    fmt.Print(newList)
+}
+
+------------------------------------------------------
+
+
+package main
+
+import "fmt"
+import "strconv"
+import "strings"
+
+func main() {
+    
+    words := strings.Fields("1E (hex) files were added")
+    newList := []string{}
+    bases := map [string]int{
+        "(hex)":16,
+        "(bin)":2,
+    }
+    
+    for i, ch := range words {
+        
+        if fn, ok := map []; ok{
+        }
+        
+        if  (i+1 < len(words)) && (words[i+1] == "(hex)") {
+            one, err := strconv.ParseInt(ch, 16, 64) //returns int64 //a function that converts 
+            if err != nil {
+                fmt.Print("error")
+            }
+            
+            one2 := strconv.Itoa(int(one)) //convert to a string/ascii from ParseInt (int64)
+            newList = append(newList, one2)
+            continue
+            
+        } else if (ch == "(hex)") {
+            continue
+        } else {
+            newList = append(newList, ch)
+        }
+    }
+    
+    fmt.Print(newList)
+}
+
+------------

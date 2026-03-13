@@ -1,0 +1,272 @@
+package main
+import ("fmt"
+        "strconv"
+        "strings")
+
+func BaseToDec(val string, base int) (int64, error) {
+    return strconv.ParseInt(val, base, 64)
+}
+
+func main() {
+    partword := "1E (hex) files were added 10 (bin) years ago"
+    word := strings.Fields(partword)
+    
+    fmt.Println(word[4])
+    fmt.Println(word)
+    
+    newList := []string{}
+    
+    for i, ch := range word {
+        if (i+1 < len(word)) {
+            
+            if ch == "(hex)" || ch == "(bin)" {
+                continue
+            } else if !strings.HasPrefix((word[i + 1]), "(") {
+                newList = append(newList, ch)
+                // continue
+            }else if word[i + 1] == "(hex)" {
+                test, _ := BaseToDec(ch,16)
+                newList = append(newList, strconv.Itoa(int(test)))
+                // continue
+            }else if word[i + 1] == "(bin)" {
+                test, _ := BaseToDec(ch,2)
+                newList = append(newList, strconv.Itoa(int(test)))
+                // continue
+            }
+        } else {
+            newList = append(newList, ch)
+        }
+    }
+    
+    fmt.Println(strings.Join(newList, " "))
+    
+}
+
+
+-----------------------------------------------------
+
+
+package main
+import ("fmt"
+        "strconv"
+        "strings")
+
+func main() {
+    
+    partword := "1E (hex) files were added and 10 (bin) years ago"
+    word := strings.Fields(partword)
+    
+    // fmt.Println(word[4])
+    // fmt.Println(word)
+    
+    newList := []string{}
+    
+    for i, ch := range word {
+    
+    if (i+1 < len(word))  && strings.HasPrefix((word[i + 1]), "(") {
+        
+        if !strings.HasPrefix((word[i + 1]), "(") {
+            newList = append(newList, ch)
+            // continue
+            
+        }
+        if (word[i + 1] == "(hex)") {
+            test, _ := BaseToDec(ch,16)
+            newList = append(newList, strconv.Itoa(int(test)))
+        }
+        if (word[i + 1] == "(bin)") {
+            test, _ := BaseToDec(ch,2)
+            newList = append(newList, strconv.Itoa(int(test)))
+        }
+        }
+    }
+    fmt.Print(newList)
+}
+
+func BaseToDec(val string, base int) (int64, error) {
+    return strconv.ParseInt(val, base, 64)
+}
+
+
+--------------------------------------------------------------------------------
+
+package main
+import ("fmt"
+        "strconv"
+        "strings")
+
+func BaseToDec(val string, base int) (int64, error) {
+    return strconv.ParseInt(val, base, 64)
+}
+
+func main() {
+    partword := "1E (hex) files were added 10 (bin) years ago"
+    word := strings.Fields(partword)
+    
+    fmt.Println(word[4])
+    fmt.Println(word)
+    
+    newList := []string{}
+    
+    for i, ch := range word {
+        if (i+1 < len(word)) {
+            
+            if ch == "(hex)" || ch == "(bin)" {
+                continue
+            } else if !strings.HasPrefix((word[i + 1]), "(") {
+                newList = append(newList, ch)
+                // continue
+            }else if word[i + 1] == "(hex)" {
+                test, _ := BaseToDec(ch,16)
+                newList = append(newList, strconv.Itoa(int(test)))
+                // continue
+            }else if word[i + 1] == "(bin)" {
+                test, _ := BaseToDec(ch,2)
+                newList = append(newList, strconv.Itoa(int(test)))
+                // continue
+            }
+            
+        } else {
+            newList = append(newList, ch)
+        }
+    }
+    
+    fmt.Println(strings.Join(newList, " "))
+    
+}
+
+
+
+
+--------------------------------------------------------------------------------
+
+package main
+import "fmt"
+import "regexp"
+
+
+func main() {
+
+    // pattern := regexp.MustCompile(`\(hex\)`)
+    // fmt.Println(pattern.MatchString("1E (hex) files"))
+    // fmt.Println(pattern.MatchString("1E files"))
+
+
+    
+    // pattern := regexp.MustCompile(`\((hex|bin)|\(hey`)
+
+    // fmt.Println(pattern.MatchString("1E (hex) files"))
+    // fmt.Println(pattern.MatchString("10 (bin) years"))
+    // fmt.Println(pattern.MatchString("hello (up) world"))
+    
+    // fmt.Println(pattern.MatchString("hello hey) world"))
+    
+    // FROM HERE*******
+    // pattern1 := regexp.MustCompile(`\((up|low|cap)\)`)
+    // pattern2 := regexp.MustCompile(`\(up|low|cap\)`)
+    
+    
+    // fmt.Println(pattern1.MatchString("(up)"))
+    // fmt.Println(pattern1.MatchString("(low)"))
+    // fmt.Println(pattern1.MatchString("(cap)"))
+    // fmt.Println(pattern1.MatchString("low"))  // should be false
+    // ```
+    
+    // Run it and observe — specifically test if `"low"` alone matches.
+    
+    // ---
+    
+    // The problem is `|` applies to the **entire left and right side**, not just the words between brackets.
+    
+    // So `\(up|low|cap\)` actually means:
+    // ```
+    // \(up    →  "(up"
+    // OR
+    // low     →  "low"       ← matches "low" alone! 
+    // OR
+    // cap\)   →  "cap)" 
+    
+    
+    pattern := regexp.MustCompile(`\((up|low|cap),\s*(\d+)\)`)
+
+    match := pattern.FindStringSubmatch("(up, 3)")
+    fmt.Println(match)
+    // ```
+    
+    // Run it and tell me:
+    // 1. How many elements are in `match`?
+    // 2. What is each element?
+    
+    // ---
+    
+    // Before you run — let me decode the pattern for you:
+    // ```
+    // \(          → literal "("
+    // (up|low|cap)→ capture group 1 — the command
+    // ,           → literal comma
+    // \s*         → zero or more spaces
+    // (\d+)       → capture group 2 — one or more digits
+    // \)          → literal ")"
+}
+
+// pattern := regexp.MustCompile(`\((hex|bin)\)`)
+
+
+--------------------------------------------------------------------------------
+
+package main
+import "fmt"
+import "regexp"
+
+func main() {
+    // pattern := regexp.MustCompile(`\((up|low|cap),\s*(\d+)\)`)
+
+    // tests := []string{
+    //     "(up, 3)",
+    //     "(low, 1)",
+    //     "(cap, 2)",
+    //     "(up)",
+    // }
+    
+    // for _, t := range tests {
+    //     match := pattern.FindStringSubmatch(t)
+    //     fmt.Println(match)
+    //     // fmt.Println(match[1])
+    // }
+    
+    // pattern := regexp.MustCompile(`\((up|low|cap)\)`)
+
+    // result := pattern.ReplaceAllString("hello (up) world (low)", "FOUND")
+    // fmt.Println(result)
+    
+    
+    //TEST 2
+    // pattern := regexp.MustCompile(`\((up|low|cap)\)`)
+    // result := pattern.ReplaceAllStringFunc("hello (up) world (low)", func(match string) string {
+    //     fmt.Println("found:", match)
+    //     return "REPLACED"
+    // })
+    
+    // fmt.Println(result)
+}
+
+--------------------------------------------------------------------------------
+
+package main
+import ("fmt"
+        "regexp")
+
+func main() {
+    // word := "i really hope, are you the ONE? WE are we"
+    
+    pattern := regexp.MustCompile(`(?i)(you|are|we|i)`)
+    match := pattern.FindAllString("i really hope, are you the ONE? WE are we", -1)
+    
+    pattern1 := regexp.MustCompile(`\d+\s*\+\s*ans`)
+    match1 := pattern1.FindAllString("you + me, 23 + you, 11+    ans", -1)
+    
+    fmt.Println((match))
+    fmt.Println((match1))
+}
+
+

@@ -1,0 +1,24 @@
+package main
+
+import (
+	"fmt"
+	"regexp"
+)
+
+func main() {
+	// pattern := regexp.MustCompile(`(\d+\S+b\+b)`)
+	// match := pattern.FindAllString("find (22 + a) the first number (23b+b)", -1)
+
+	pattern, err := regexp.Compile(`(\(\d+\S+b\+b\))`)
+	if err != nil {
+		fmt.Println("doesnt work fine")
+	}
+
+	try := "(23b+b)"
+	match := pattern.FindString("find (22 + a) the first number " + try)
+	if match == try {
+		match = "found it!"
+	}
+
+	fmt.Println(match)
+}

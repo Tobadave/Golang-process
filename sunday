@@ -22,3 +22,47 @@ func main() {
 
 	fmt.Println(match)
 }
+
+----
+
+
+package main
+
+import (
+    "fmt"
+    "regexp"
+    "strings"
+)
+
+func fetch(command string, word string) string {
+    switch command {
+    case "up":
+        return strings.ToUpper(word)
+    case "low":
+        return strings.ToLower(word)
+    case "cap":
+        return strings.Title(word)
+    default:
+        return word
+    }
+}
+
+func main() {
+    text := "hello (up) world (low)"
+    words := strings.Fields(text)
+    newList := []string{}
+
+    pattern := regexp.MustCompile(`^\((up|low|cap)\)$`)
+
+    for i, w := range words {
+        match := pattern.FindStringSubmatch(w)
+
+        if match != nil && i > 0 {
+            newList[len(newList)-1] = fetch(match[1], words[i-1])
+        } else {
+            newList = append(newList, w)
+        }
+    }
+
+    fmt.Println(strings.Join(newList, " "))
+}

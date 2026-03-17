@@ -1,0 +1,77 @@
+package main
+
+import (
+	"fmt"
+	"regexp"
+	"strconv"
+	"strings"
+)
+
+// competence, character, charisma | NJFP -> UNDP
+func main() {
+	fmt.Println("Try programiz.pro")
+
+	compound := "I want to be (up, 3) HIGHer (low) than raymond (cap)"
+	// compound - "I WANT TO BE higher than Raymond"
+	words := strings.Fields(compound)
+
+	// pattern := regexp.MustCompile(`^\((up|low|cap)(?:\s*,\s*\d+ )?\)$`)
+	pattern := regexp.MustCompile(`^\((up|low|cap)(?:\s*,\s*\d+)?\)$`)
+	//  `^\((up|low|cap)(?:\s*,\s*\d+)?\)$`
+
+	newList := []string{}
+
+	for _, w := range words {
+		match := pattern.FindStringSubmatch(w)
+		fmt.Println(match)
+		fmt.Println(len(match))
+
+		// if (strings.HasPrefix(w, "(") || (!strings.HasSuffix(w, ")") && strings.HasSuffix(w, ","))) && (!strings.HasPrefix(words[i+1], "(") && strings.HasSuffix(words[i+1], ")")) {
+		//     newL := []string{}
+		//     newL = append(newL, w, words[i+1])
+
+		//     words[i+1] = strings.Join(newL, "")
+		//     continue
+		// }
+
+		if (len(newList) >= 1) && (match != nil) { //found a match, what next?
+
+			if len(match) == 3 && match[2] != "" { //find "(up, 2)"
+
+				count, _ := strconv.Atoi(match[2]) //"3"
+				oper := match[1]
+
+				if len(newList) >= count {
+					for j := 1; j <= count; j++ {
+						newAns := fetch(newList[len(newList)-j], oper)
+						newList[len(newList)-j] = newAns
+					}
+				}
+
+			} else if len(match) == 2 { // found only "up"
+				newList[len(newList)-1] = fetch(newList[len(newList)-1], match[1])
+
+			} else {
+				continue
+			}
+		} else {
+			newList = append(newList, w)
+		}
+	}
+
+	fmt.Println(newList)
+}
+
+func fetch(prevNum, operation string) string {
+
+	switch operation {
+	case "cap":
+		return strings.Title(prevNum)
+	case "low":
+		return strings.ToLower(prevNum)
+	case "up":
+		return strings.ToUpper(prevNum)
+	default:
+		return prevNum
+	}
+}

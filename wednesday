@@ -1,0 +1,66 @@
+package main
+
+import (
+	"fmt"
+	"regexp"
+	"strconv"
+	"strings"
+)
+
+func main() {
+	joinwords := "I hope to be (up,3) better LIKE (low) mike (cap)"
+	// result := "I HOPE TO BE like better Mike."
+
+	words := strings.Fields(joinwords)
+	pattern := regexp.MustCompile(`^\((up|low|cap)(?:\s*,\s*(\d+))?\)$`)
+
+	newList := []string{}
+
+	for _, w := range words {
+
+		match := pattern.FindStringSubmatch(w) // takes it one by one
+		listcount := len(newList)              //extract the number of lenght of newList
+
+		if (match != nil) && (len(newList) != 0) { //that if a match is found, right?
+			oper1 := match[1] //gets the operation
+
+			if (len(match) > 2) && (match[2] != "") { //if match[2] is found
+				count, _ := strconv.Atoi(match[2])
+				back := 0
+
+				for j := 1; j <= count; j++ {
+					back = j
+					newList[listcount-back] = fetch(oper1, newList[len(newList)-back])
+					//the above loc replaces the prev strings amount of time
+				}
+
+			} else {
+				prev1 := newList[listcount-1]
+
+				newList[listcount-1] = fetch(oper1, prev1)
+				// fmt.Println("done")
+			}
+
+		} else {
+			newList = append(newList, w) //adds the default word
+		}
+	}
+
+	// fmt.Println(newList)
+	finalOut := strings.Join(newList, " ")
+	fmt.Println(finalOut)
+}
+
+func fetch(oper, prev string) string {
+	switch oper {
+	case "up":
+		return strings.ToUpper(prev)
+	case "low":
+		return strings.ToLower(prev)
+	case "cap":
+		return strings.Title(prev)
+
+	default:
+		return prev
+	}
+}

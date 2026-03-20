@@ -122,3 +122,101 @@ func fetch(oper, prev string) string {
 
 
 ///updated code above
+
+package main
+import "fmt"
+
+func main() {
+  fmt.Println("Try programiz.pro")
+  
+  bases := map [string]int {
+      "bin":2,
+      "hex":16,
+  }
+  
+  fmt.Println(bases)
+  new := check(10)
+  
+  fmt.Println(new(80))
+}
+
+func check(n int) func(int) int{
+      return func(int) int {
+          return n * n
+      }
+  }
+
+
+  ///
+
+  package main
+
+import (
+	"fmt"
+	"regexp"
+	"strconv"
+	"strings"
+)
+
+func main() {
+	fullwords := "I want to be (up, 3) BETTER (low) Just like mike (cap)"
+	words := strings.Fields(fullwords)
+
+	pattern := regexp.MustCompile(`^\((cap|low|up)(?:\s*,\s*(\d+))?\)$`)
+	newList := []string{}
+
+
+	cleanedList := []string{}
+	for i := 0; i < len(words); i++ {
+		w := words[i]
+		if (i+1 < len(words)) && (strings.HasPrefix(w, "(") && (!strings.HasSuffix(w, ")") || strings.HasSuffix(w, ","))) && (!strings.HasPrefix(words[i+1], "(") && strings.HasSuffix(words[i+1], ")")) {
+			cleanedList = append(cleanedList, w+" "+words[i+1])
+			i++
+		} else {
+			cleanedList = append(cleanedList, w)
+		}
+	}
+
+	for _, w := range cleanedList {
+		clean := strings.Trim(w, ".!,")
+		match := pattern.FindStringSubmatch(clean)
+
+		if (match != nil) && (len(match) >= 1) { // a match is -present
+			oper := match[1]
+
+			if match[2] != "" { //if found "(up, 3)"
+				count, _ := strconv.Atoi(match[2])
+
+				for j := 1; j <= count; j++ {
+					newList[len(newList)-j] = fetch(oper, newList[len(newList)-j])
+				}
+			} else {
+			    
+				newList[len(newList)-1] = fetch(oper, newList[len(newList)-1])
+			}
+
+		} else {
+			newList = append(newList, w)
+		}
+	}
+
+	fmt.Println(newList)
+}
+
+func fetch(oper, prev string) string {
+	bases := map [string]int {
+	    "hex":16,
+	    "bin":2,
+	}
+    
+	switch oper {
+	case "cap":
+		return strings.Title(prev)
+	case "low":
+		return strings.ToLower(prev)
+	case "up":
+		return strings.ToUpper(prev)
+	default:
+		return prev
+	}
+}

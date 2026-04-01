@@ -7,36 +7,34 @@ import (
 )
 
 func main() {
-
-	read, err := os.ReadFile("banner/standard.txt") //read in the file by byte default
-	if err != nil {                                 //if error is not nil (like null)
-		fmt.Println("Not working")
-		return //end the program if found error
+	if len(os.Args) != 2 { //checks if the argument is up to 2
+		fmt.Println("ERROR: Requires One input string!")
+		return
 	}
 
-	lines := strings.Split(string(read), "\n") //reads in the user input and only divide by \n if there is a new line takes in all chars line by line
-
-	if len(os.Args) != 2 { //checks the length of the argument. (Must be 2)
-		fmt.Println("Required just 2 Arguments for this function!")
-		return //ends the program here
+	file, err := os.ReadFile("banner/standard.txt") //reads the txt file, in bytes by default
+	if err != nil {                                 //guard error check
+		fmt.Println("ERROR: Banner file not found")
+		return
 	}
 
-	inputText := strings.Split(os.Args[1], "\n") //reads in the first args i.e your strings (USER INPUT)
+	filedata := strings.Split(string(file), "\n") //put all values of every line in an array
+	input := strings.Split(os.Args[1], "\n")      //gets the string
 
-	for _, word := range inputText { //loop each of the word, one by one
-		if word == "" { //if empty (THIS IS A NEW LINE, from line 24)
-			fmt.Println() //if found empty string (as new line) goto the new line
-			continue      //continue and push on to the next flow
+	for _, word := range input {
+		if word == "" {
+			fmt.Println()
+			continue
 		}
 
-		for row := 1; row <= 8; row++ { // we are going to work on a full column before moving to the next one, hence 8 height (col)
+		for row := 1; row <= 8; row++ {
 
-			for _, char := range word { //for each letter in the current word
-				start := int(char-32) * 9   //we want to get the index of the beginning of the character
-				fmt.Print(lines[start+row]) //we use start (which is constant for the current word) and row to move to the next index, in the same char, since they are stored in a single line side by side
+			for _, ch := range word {
+				start := int(ch-32) * 9
+				fmt.Print(filedata[start+row])
 			}
-
-			fmt.Println() // goes down to
+			fmt.Println()
 		}
 	}
+
 }

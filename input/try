@@ -1,0 +1,42 @@
+package main
+
+import (
+	"fmt"
+	"os"
+	"strings"
+)
+
+func main() {
+
+	read, err := os.ReadFile("banner/standard.txt") //read in the file by byte default
+	if err != nil {                                 //if error is not nil (like null)
+		fmt.Println("Not working")
+		return //end the program if found error
+	}
+
+	lines := strings.Split(string(read), "\n") //reads in the user input and only divide by \n if there is a new line takes in all chars line by line
+
+	if len(os.Args) != 2 { //checks the length of the argument. (Must be 2)
+		fmt.Println("Required just 2 Arguments for this function!")
+		return //ends the program here
+	}
+
+	inputText := strings.Split(os.Args[1], "\n") //reads in the first args i.e your strings (USER INPUT)
+
+	for _, word := range inputText { //loop each of the word, one by one
+		if word == "" { //if empty (THIS IS A NEW LINE, from line 24)
+			fmt.Println() //if found empty string (as new line) goto the new line
+			continue      //continue and push on to the next flow
+		}
+
+		for row := 1; row <= 8; row++ { // we are going to work on a full column before moving to the next one, hence 8 height (col)
+
+			for _, char := range word { //for each letter in the current word
+				start := int(char-32) * 9   //we want to get the index of the beginning of the character
+				fmt.Print(lines[start+row]) //we use start (which is constant for the current word) and row to move to the next index, in the same char, since they are stored in a single line side by side
+			}
+
+			fmt.Println() // goes down to the next line to fill the char
+		}
+	}
+}

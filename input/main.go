@@ -22,35 +22,22 @@ func main() {
 	input = strings.ReplaceAll(input, "\\n", "\n") // this LOC replaces all literal "\n" with 'newline'
 	inputText := strings.Split(input, "\n")        //gets the string and split all addup ifit sees a new line
 
-	printAscii(inputText, filedata) //this function takes in our USER-INPUT and the BANNER "standard.txt" file
+	fmt.Println(printAscii(inputText, filedata)) //this function takes in our USER-INPUT and the BANNER "standard.txt" file
 }
 
-func verifyFile() []string {
+func verifyFile() []string { // checks and vetifies the banner files and user inout read
 
-	fileopt := ""
+	fileopt := "" //a new var to store value of input
 
-	// if len(os.Args) == 3 {
-	// 	switch os.Args[2] {
-	// 	case "thinkertoy":
-	// 		fileopt = "thinkertoy"
-	// 	case "standard":
-	// 		fileopt = "standard"
-	// 	case "shadow":
-	// 		fileopt = "shadow"
-	// 	default:
-	// 		fileopt = "standard"
-	// 	}
-	// }
-
-	if len(os.Args) == 3 {
-		fileopt = os.Args[2]
+	if len(os.Args) == 3 { //if the user inputs 3 characters
+		fileopt = os.Args[2] // checks for the value of the 3rd index
 	} else {
-		fileopt = "standard"
+		fileopt = "standard" //default file name if user dosent fill 3rd place
 	}
 
-	if (fileopt != "standard") && (fileopt != "thinkertoy") && (fileopt != "shadow") {
-		fmt.Print("ERROR : Invalid Banner name & ")
-		return nil
+	if (fileopt != "standard") && (fileopt != "thinkertoy") && (fileopt != "shadow") { //must be either of them
+		fmt.Print("ERROR : Invalid Banner name & ") // if none of the names is entered by the user
+		return nil                                  // returns nil
 	}
 
 	// fileopt = fmt.Sprintf(`banner/%v.txt`, fileopt)
@@ -64,14 +51,15 @@ func verifyFile() []string {
 }
 
 // this function checks if the
-func printAscii(inputText, filedata []string) { //the USER-INPUT & FILEDATA are slices now
+func printAscii(inputText, filedata []string) string { //the USER-INPUT & FILEDATA are slices now
+	var sb strings.Builder
 
 	const asciiOffset = 32 //the starting character of the ascii count
 	const charHeight = 9   // the height of each character (row)
 
 	for _, word := range inputText { //takes the input string at ONCE
 		if word == "" { //checks of the whole string entered is just --> " "
-			fmt.Println() //prints a new line
+			sb.WriteString("\n") //prints a new line
 			continue
 		}
 
@@ -79,9 +67,11 @@ func printAscii(inputText, filedata []string) { //the USER-INPUT & FILEDATA are 
 
 			for _, char := range word { //fills in the first row of every character before moving to the next line
 				start := int(char-asciiOffset) * charHeight //uses 'char' to get the current rune to find the number on the banner file. * charHeight because this is not a regular single rune, one contains 9 line spaces, so 9 for each what ever the character is.
-				fmt.Print(filedata[start+row])              // file data is the dict for our ascii characters of 9 lines, this fetches using 'start', and adds the value of 'row' (like adding +1, to go to the next line, so it dosent orint the sam row for all)
+				sb.WriteString(filedata[start+row])         // file data is the dict for our ascii characters of 9 lines, this fetches using 'start', and adds the value of 'row' (like adding +1, to go to the next line, so it dosent orint the sam row for all)
 			}
-			fmt.Println() // goes to the ext line after each line
+			sb.WriteString("\n") // goes to the ext line after each line
 		}
 	}
+
+	return sb.String()
 }

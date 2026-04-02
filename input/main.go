@@ -49,14 +49,14 @@ func verifyFile() []string {
 	}
 
 	if (fileopt != "standard") && (fileopt != "thinkertoy") && (fileopt != "shadow") {
-		fmt.Print("ERROR : Invalid Banner name")
+		fmt.Print("ERROR : Invalid Banner name & ")
 		return nil
 	}
 
-	fileopt = fmt.Sprintf(`banner/%v.txt`, fileopt)
+	// fileopt = fmt.Sprintf(`banner/%v.txt`, fileopt)
 
-	file, err := os.ReadFile(fmt.Sprintf(`banner/%v`, fileopt)) //reads the txt file, in bytes by default
-	if err != nil {                                             //guard error check
+	file, err := os.ReadFile(fmt.Sprintf(`banner/%v.txt`, fileopt)) //reads the txt file, in bytes by default
+	if err != nil {                                                 //guard error check
 		return nil
 	}
 	//you dont need an else after a return (it already stops there)

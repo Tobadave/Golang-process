@@ -40,3 +40,16 @@ func main() {
 		}
 	}
 }
+
+
+	// if len(os.Args) != 2 || len(os.Args) != 3 { //checks if the argument is up to 2 and prints an error and ends the code
+	// 	fmt.Println("ERROR: Requires One input string!")
+	// 	return
+	// }
+
+	// if len(os.Args) == 3 {
+	// 	switch os.Args[2] {
+	// 	case "shadow" :
+			
+	// 	}
+	// }

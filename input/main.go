@@ -7,8 +7,8 @@ import (
 )
 
 func main() {
-	if len(os.Args) != 2 { //checks if the argument is up to 2 and prints an error and ends the code
-		fmt.Println("ERROR: Requires One input string!")
+	if len(os.Args) != 2 && len(os.Args) != 3 { //checks if the argument is up to 2 and prints an error and ends the code
+		fmt.Println("ERROR: Requires One OR Two input string!")
 		return
 	}
 
@@ -27,8 +27,36 @@ func main() {
 
 func verifyFile() []string {
 
-	file, err := os.ReadFile("banner/standard.txt") //reads the txt file, in bytes by default
-	if err != nil {                                 //guard error check
+	fileopt := ""
+
+	// if len(os.Args) == 3 {
+	// 	switch os.Args[2] {
+	// 	case "thinkertoy":
+	// 		fileopt = "thinkertoy"
+	// 	case "standard":
+	// 		fileopt = "standard"
+	// 	case "shadow":
+	// 		fileopt = "shadow"
+	// 	default:
+	// 		fileopt = "standard"
+	// 	}
+	// }
+
+	if len(os.Args) == 3 {
+		fileopt = os.Args[2]
+	} else {
+		fileopt = "standard"
+	}
+
+	if (fileopt != "standard") && (fileopt != "thinkertoy") && (fileopt != "shadow") {
+		fmt.Print("ERROR : Invalid Banner name")
+		return nil
+	}
+
+	fileopt = fmt.Sprintf(`banner/%v.txt`, fileopt)
+
+	file, err := os.ReadFile(fmt.Sprintf(`banner/%v`, fileopt)) //reads the txt file, in bytes by default
+	if err != nil {                                             //guard error check
 		return nil
 	}
 	//you dont need an else after a return (it already stops there)

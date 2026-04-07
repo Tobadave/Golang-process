@@ -15,6 +15,7 @@ func main() {
 
 	if data == nil {
 		fmt.Println("ERROR : Yout input does not align with the instructions")
+		// fmt.Println()
 		return
 	} else {
 		fmt.Println("File Working well!")

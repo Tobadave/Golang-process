@@ -146,9 +146,6 @@ func check(n int) func(int) int{
       }
   }
 
-
-  ///
-
   package main
 
 import (

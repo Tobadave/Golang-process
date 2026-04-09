@@ -22,16 +22,45 @@ func main() {
 	data := string(file)
 
 	new := strings.Split(data, " ")
+	new2 := strings.Join(new, " ")
+	tn := strings.Trim(new2, " ")
+
+	fmt.Println(new)
+	fmt.Println(new2)
+	fmt.Println(tn)
+	fmt.Println("=======")
+	fmt.Println(len(new))
+	fmt.Println(len(new2))
+	fmt.Println((len(tn)))
 
 	// fmt.Println(data)
 	// fmt.Println(new)
 	// fmt.Println(len(new))
 
-	for i := 0; i < (len(new)); i++ {
+	// works but does not guard
+	//-----------------------
+	// for i := 0; i < (len(new)); i++ {
 
-		text := (new[i])
+	// 	text := (new[i])
+	// 	pre := i + 1
+	// 	output := fmt.Sprintf(`%v : %s`, pre, text)
+	// 	fmt.Println(output)
+	// }
+	fmt.Println(printNo(new2))
+	// printNo(new2)
+}
+
+func printNo(s string) string {
+	final := ""
+
+	for i := 0; i < (len(s)); i++ {
+
+		text := (s[i])
 		pre := i + 1
-		output := fmt.Sprintf(`%v : %s`, pre, text)
-		fmt.Println(output)
+		output := fmt.Sprintf(`%v : %s`, pre, text) 
+		// fmt.Println(output)
+		// return output
+		final += string(output)
 	}
+	return final
 }

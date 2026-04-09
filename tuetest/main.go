@@ -16,18 +16,23 @@ func main() {
 		return
 	}
 
-	lines := strings.Split(string(data), "\n") 
+	//the LOC below groups each ascii art into lines of 8, then new line (\n)
+	lines := strings.Split(string(data), "\n")
 
-	input := string(os.Args[1])
-	inputWords := strings.Split(input, "\\n") //the string inputted
-	// inputWords := strings.ReplaceAll(input, `\n`,)
+	//puts the value of args.1 into input, as string
+	input := string(os.Args[1]) //string in by default
+
+	//this below sets the input as a string
+	input = strings.ReplaceAll(input, "\\n", "\n") // str | old | new
+	inputWords := strings.Split(input, "\n")
 
 	// const height = 8 // the max height
 
 	for _, word := range inputWords {
-		if word == "" {
-			fmt.Println("ERROR: You entered an empty string")
-			return
+		if word == "" || word == "\n" {
+			// fmt.Println("ERROR: You entered an empty string")
+			fmt.Println() //should print a new line instead
+			continue
 		}
 
 		for row := 1; row <= 8; row++ { //loops through the height

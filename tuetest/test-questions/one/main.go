@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	fmt.Println("Working well")
+	// fmt.Println("Working well")
 
 	read, err := os.ReadFile("words.txt")
 	if err != nil {
@@ -16,20 +16,15 @@ func main() {
 	}
 
 	readString := string(read)
+	trial := strings.Fields(readString)
 
-	fmt.Println(readString)
-	read2 := strings.Fields(readString)
+	for i := 0; i < len(trial); i++ {
+		ch := trial[i]
+		num := i + 1
+		// fmt.Println(fmt.Printf(`%v: %s`, num, ch))
+		pre := fmt.Sprintf(`%v: %s`, num, ch)
+		fmt.Println(string(pre))
+		// fmt.Println(ch)
+	}
 
-	fmt.Println(strings.Join(read2, " "))
-
-	//function to test it
-
-	// for i:=0; i<len(readString); i++ {
-	// 	ch := string(readString[i])
-	// 	out := strings.TrimSpace(ch)
-
-	// 	fmt.Println(out)
-	// }
-
-	// fmt.Println(out)
 }

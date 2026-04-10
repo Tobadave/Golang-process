@@ -1,9 +1,3 @@
-// Write a Go program that reads a file called words.txt, splits it by newlines, and prints each line with its line number in front.
-// Example output:
-// 1: Hello
-// 2: World
-// 3: Goodbye
-
 package main
 
 import (
@@ -13,54 +7,29 @@ import (
 )
 
 func main() {
-	file, err := os.ReadFile("words.txt")
+	fmt.Println("Working well")
+
+	read, err := os.ReadFile("words.txt")
 	if err != nil {
-		fmt.Println("ERROR: File not found")
+		fmt.Println("ERROR: File not found.")
 		return
 	}
 
-	data := string(file)
+	readString := string(read)
 
-	new := strings.Split(data, " ")
-	new2 := strings.Join(new, " ")
-	tn := strings.Trim(new2, " ")
+	fmt.Println(readString)
+	read2 := strings.Fields(readString)
 
-	fmt.Println(new)
-	fmt.Println(new2)
-	fmt.Println(tn)
-	fmt.Println("=======")
-	fmt.Println(len(new))
-	fmt.Println(len(new2))
-	fmt.Println((len(tn)))
+	fmt.Println(strings.Join(read2, " "))
 
-	// fmt.Println(data)
-	// fmt.Println(new)
-	// fmt.Println(len(new))
+	//function to test it
 
-	// works but does not guard
-	//-----------------------
-	// for i := 0; i < (len(new)); i++ {
+	// for i:=0; i<len(readString); i++ {
+	// 	ch := string(readString[i])
+	// 	out := strings.TrimSpace(ch)
 
-	// 	text := (new[i])
-	// 	pre := i + 1
-	// 	output := fmt.Sprintf(`%v : %s`, pre, text)
-	// 	fmt.Println(output)
+	// 	fmt.Println(out)
 	// }
-	fmt.Println(printNo(new2))
-	// printNo(new2)
-}
 
-func printNo(s string) string {
-	final := ""
-
-	for i := 0; i < (len(s)); i++ {
-
-		text := (s[i])
-		pre := i + 1
-		output := fmt.Sprintf(`%v : %s`, pre, text) 
-		// fmt.Println(output)
-		// return output
-		final += string(output)
-	}
-	return final
+	// fmt.Println(out)
 }

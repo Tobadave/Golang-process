@@ -14,7 +14,7 @@ func main() {
 
 	input := os.Args[1]
 
-	data, err := os.ReadFile("words.txt")
+	data, err := os.ReadFile("data.txt")
 	if err != nil {
 		fmt.Println("ERROR: File not found")
 		return

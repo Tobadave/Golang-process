@@ -13,9 +13,12 @@ func main() {
 		return
 	}
 
-	userinput := 
+	// userinput :=
 
-	read, _ := os.ReadFile("sample.txt")
+	read, err := os.ReadFile("sample.txt")
+	if err != nil {
+		fmt.Println("ERROR")
+	}
 	data := string(read)
 
 	// fmt.Print((data))
@@ -24,8 +27,6 @@ func main() {
 
 	sep := strings.Split(data, "\n") //takes by new line
 	fmt.Println(len(sep))
-
-
 
 	// order := strings.Fields(string(data)) //breaks by words,
 }

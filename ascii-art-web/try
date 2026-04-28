@@ -1,0 +1,206 @@
+// package asciiartweb
+
+// import ("fmt"
+// 		"net/http")
+
+// func main() {
+// 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+// 		fmt.Fprintf(w, "Hello from Go")
+// 	})
+
+// 	http.ListenAndServe(":8080", nil)
+// }
+
+
+
+package main
+
+import (
+	"fmt"
+	"net/http"
+)
+
+func main() {
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+
+		if r.URL.Path != "/" {
+			http.Error(w, "404", http.StatusNotFound)
+			return
+		}
+
+		w.Header().Set("Content-Type", "text/html")
+		w.WriteHeader(http.StatusOK)
+		fmt.Fprintf(w, "<h1>Hello from Go!</h1>")
+	})
+
+	http.ListenAndServe("8080", nil)
+}
+
+
+
+//
+
+package main
+
+import (
+	"fmt"
+	"html/template"
+	"net/http"
+)
+
+func main() {
+	type PageData struct {
+		Name    string
+		Message string
+	}
+
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		if r.URL.Path != "/" {
+			http.Error(w, "FILE NOT FOUND", http.StatusNotFound)
+			return
+		}
+
+		tmpl, err := template.ParseFiles("index.html")
+		if err != nil {
+			http.Error(w, "Error loading files", http.StatusInternalServerError)
+			return
+		}
+
+		data := PageData{
+			Name:    "John",
+			Message: "3 new message",
+		}
+
+		tmpl.Execute(w, data)
+
+		// if r.URL.Path != "/" {
+		// 	http.Error(w, "404", http.StatusNotFound)
+		// 	return
+		// }
+
+		// w.Header().Set("Content-Type", "text/html")
+		// w.WriteHeader(http.StatusOK)
+		// fmt.Fprintf(w, "<h1>Hello from Go!</h1>")
+	})
+
+	http.HandleFunc("/about", func(w http.ResponseWriter, r *http.Request) {
+
+		w.Header().Set("Content-Type", "text/html")
+		w.WriteHeader(http.StatusOK)
+		fmt.Fprintf(w, "<h1>About Page<h1>")
+	})
+
+	http.ListenAndServe(":8080", nil)
+
+}
+
+
+///
+
+
+my test file :
+
+package main
+
+import (
+	"fmt"
+	"html/template"
+	"net/http"
+)
+
+type PageData struct {
+	Name    string
+	Age     int
+	Message string
+	List    []string
+}
+
+func main() {
+
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		if r.URL.Path != "/" {
+			http.Error(w, "ERROR: PAGE FOES NOT EXIST", http.StatusInternalServerError)
+			return
+		}
+
+		tmpl, err := templpackage main
+
+import (
+	"fmt"
+	"html/template"
+	"net/http"
+)
+
+type PageData struct {
+	Name    string
+	Age     int
+	Message string
+	List    []string
+}
+
+func main() {
+
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		if r.URL.Path != "/" {
+			http.Error(w, "ERROR: PAGE FOES NOT EXIST", http.StatusInternalServerError)
+			return
+		}
+
+		tmpl, err := template.ParseFiles("templates/index.html")
+		if err != nil {
+			http.Error(w, "ERROR: Was unable to load files", http.StatusNotFound)
+			return
+		}
+
+		data := PageData{
+			Name:    "Daniel",
+			Age:     0,
+			Message: "Believe in yourself",
+			List:    []string{"hello", "world"},
+		}
+
+		tmpl.Execute(w, data)
+	})
+
+	http.HandleFunc("/back", func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprintf(w, "Oh well, this is a backdoor access")
+	})
+
+	http.HandleFunc("/test", func(w http.ResponseWriter, r *http.Request) {
+
+		w.Header().Set("Content-Type", "text/html")
+		w.WriteHeader(http.StatusOK)
+		fmt.Fprintf(w, "<p>Welcome to the test page</p> <br> <a href='/'>Click here to go back to homepae</a>")
+	})
+
+	http.ListenAndServe(":8080", nil)
+}
+ate.ParseFiles("templates/index.html")
+		if err != nil {
+			http.Error(w, "ERROR: Was unable to load files", http.StatusNotFound)
+			return
+		}
+
+		data := PageData{
+			Name:    "Daniel",
+			Age:     0,
+			Message: "Believe in yourself",
+			List:    []string{"hello", "world"},
+		}
+
+		tmpl.Execute(w, data)
+	})
+
+	http.HandleFunc("/back", func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprintf(w, "Oh well, this is a backdoor access")
+	})
+
+	http.HandleFunc("/test", func(w http.ResponseWriter, r *http.Request) {
+
+		w.Header().Set("Content-Type", "text/html")
+		w.WriteHeader(http.StatusOK)
+		fmt.Fprintf(w, "<p>Welcome to the test page</p> <br> <a href='/'>Click here to go back to homepae</a>")
+	})
+
+	http.ListenAndServe(":8080", nil)
+}

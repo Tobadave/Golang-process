@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <h1>Welcome {{.Name}}!</h1>
+        <p>Luckily {{.Name}} is {{.Age}} years old</p>
+
+        <hr>
+        <p>Here is what {{.Name}}  thinks of life: </p>
+        <h3>"{{.Message}}"</h3>
+
+        <!-- <br> -->
+        {{if .Age}}
+            <p>Age is provided</p>
+        {{else}}
+            <p>Age is unknown</p>
+        {{end}}
+
+        <hr>
+        <a href="/test">Go to test page</a>
+
+        <br>
+        
+        {{range .List}}
+            <p>{{.}}</p>
+        {{end}}
+
+    </body>
+</html>

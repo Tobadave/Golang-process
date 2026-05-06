@@ -1,4 +1,4 @@
-package articlescheck
+package main
 
 import (
 	"strings"

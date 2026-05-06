@@ -9,64 +9,104 @@ import (
 func main() {
 	// one := CeaserCipher("Hello", 3)
 	// fmt.Println(one)
+	one := isBalanced("({[]})")
+	fmt.Println(one)
 }
 
 // Determine if a string's brackets — (), [], {} — are properly balanced and correctly nested.
-
 // isBalanced("({[]})") → true isBalanced("([)]") → false
 
-func brackets(s string) bool {
-	brack1 := map[rune]bool {
+func isBalanced(s string) bool {
+	open := map [rune]bool {
 		'[':true,
 		'{':true,
 		'(':true,
 	}
 
-	
-	brack2 := map[rune]bool {
+	close := map [rune]bool {
 		']':true,
 		'}':true,
 		')':true,
 	}
 
-	all := map[rune]bool {
-		']':true,
-		'}':true,
-		')':true,
-		'[':true,
-		'{':true,
-		'(':true,
-	}
+	check := []rune{}
 
-
-	// for _, ch := range s {
-	// 	if val, ok := brack[ch]; ok {
-	// 		if ( ch != val) && 
-
-	// 	}
-	// }
-	build := []rune{}
 	for _, ch := range s {
-		if _, ok := all[ch]; ok {
-			build = append(build, all[ch])
+		if _, ok := open[ch]; ok {
+			check = append(check, open[ch])
+		}
+
+		if _, ok := close[ch]; ok {
+			check = append(check, close[ch])
+		}
+
+		if 2% len(check) != 0 {
+			return false
 		}
 	}
 
-	brac := map[rune]int {}
-	// newone := br
-	for _, ch := range s {
-		if _, ok  := brack1[ch]; ok { //found one bracket...
-			brac[ch]++
+	// for _, ch := range block
+	for i:=0; i<len(check); i++ {
+		curr := check[i]
+		if _, ok := open[curr]; ok {
+			
 		}
-
-		if _, ok  := brack2[ch]; ok { //found one bracket...
-
-			brac[ch]++ //they should be equal to them selvues
-		}
-
-
 	}
 }
+
+
+// func brackets(s string) bool {
+// 	brack1 := map[rune]bool {
+// 		'[':true,
+// 		'{':true,
+// 		'(':true,
+// 	}
+
+	
+// 	brack2 := map[rune]bool {
+// 		']':true,
+// 		'}':true,
+// 		')':true,
+// 	}
+
+// 	all := map[rune]bool {
+// 		']':true,
+// 		'}':true,
+// 		')':true,
+// 		'[':true,
+// 		'{':true,
+// 		'(':true,
+// 	}
+
+
+// 	// for _, ch := range s {
+// 	// 	if val, ok := brack[ch]; ok {
+// 	// 		if ( ch != val) && 
+
+// 	// 	}
+// 	// }
+// 	build := []rune{}
+// 	for _, ch := range s {
+// 		if _, ok := all[ch]; ok {
+// 			build = append(build, all[ch])
+// 		}
+// 	}
+
+// 	brac := map[rune]int {}
+// 	// newone := br
+// 	for _, ch := range s {
+// 		if _, ok  := brack1[ch]; ok { //found one bracket...
+// 			brac[ch]++
+// 		}
+
+// 		if _, ok  := brack2[ch]; ok { //found one bracket...
+
+// 			brac[ch]++ //they should be equal to them selvues
+// 		}
+
+
+// 	}
+// }
 
 // func CeaserCipher(s string, n int) string {
 // 	// var build strings.Builder
